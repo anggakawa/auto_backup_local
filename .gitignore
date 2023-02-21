@@ -1,0 +1,31 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Environment variables
+.env
+
+# IDE-specific files
+.vscode/
+*.pydevproject
+*.project
+*.idea
+*.egg-info
+*.iml
+*.DS_Store
+
+# Logs
+logs/
+*.log
+
+# OS-generated files
+Icon?
+.DS_Store
+ehthumbs.db
+Thumbs.db
