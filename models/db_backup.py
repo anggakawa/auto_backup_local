@@ -69,6 +69,7 @@ class DbBackup(models.Model):
         help="Choose the format for this backup.",
     )
 
+    # function in odoo.service.db, not used
     def dump_db_manifest(self, cr):
         pg_version = "%d.%d" % divmod(cr._obj.connection.server_version / 100, 100)
         cr.execute("SELECT name, latest_version FROM ir_module_module WHERE state = 'installed'")
@@ -84,6 +85,7 @@ class DbBackup(models.Model):
         }
         return manifest
 
+    # function in odoo.service.db, not used
     def dump_db(self, db_name, stream, backup_format='zip'):
         """Dump database `db` into file-like object `stream` if stream is None
         return a file object with the dump """
@@ -167,9 +169,20 @@ class DbBackup(models.Model):
                             shutil.copyfileobj(cached, destiny)
                     # Generate new backup
                     else:
-                        self.dump_db(
+
+                        # naive method below
+                        # old_config = odoo.tools.config['list_db']
+                        # odoo.tools.config['list_db'] = True # bypass the access
+                        # db.dump_db(
+                        #     self.env.cr.dbname, destiny, backup_format=rec.backup_format
+                        # )
+                        # odoo.tools.config['list_db'] = old_config # restore config
+
+                        # use method below if you did not wish to change the config
+                        db.dump_db(
                             self.env.cr.dbname, destiny, backup_format=rec.backup_format
                         )
+
                         backup = backup or destiny.name
                 successful |= rec
 
